@@ -72,7 +72,10 @@ public class Controller {
 		if(entityDataCheck.size() != 0) {
 			entityQuantity = entityDataCheck.get(0).getQuantity();
 		}
-		if(trans.getBuyOrSell()=="sell") {
+		System.out.println(trans.getBuyOrSell());
+		if(trans.getBuyOrSell().equals("sell")) {
+			System.out.println(trans.getQuantity());
+			System.out.println(entityQuantity);
 			if(entityQuantity >= trans.getQuantity()) {
 				entityQuantity-=trans.getQuantity();
 			}
