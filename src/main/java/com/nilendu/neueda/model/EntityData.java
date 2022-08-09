@@ -26,6 +26,9 @@ public class EntityData implements Serializable {
 	private Long entityID;
 	
 	//name of the entity e.g. which bank stock or what type of crypto coin
+	//entity name should be in the format: "<type> <name>"
+	//where the type is : crypto,cash,stock
+	//name is the name of the company/etc
 	private String entityName;
 	
 	//this is the quantity of each entity present currently
@@ -42,5 +45,16 @@ public class EntityData implements Serializable {
 	public int getQuantity() {
 		return this.quantity;
 	}
-
+	
+	public void setEntityID(Long entityID) {
+		this.entityID = entityID;
+	}
+	
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
+	}
+	
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 }

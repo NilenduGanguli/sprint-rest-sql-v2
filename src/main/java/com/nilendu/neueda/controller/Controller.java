@@ -27,6 +27,8 @@ public class Controller {
     IndexRepository indexRepo;
     @Autowired
     EntityDataRepository entityDataRepo;
+    @Autowired
+    EntityDefinitionRepository entityDefRepo;
     
     // Get All stocks
     @GetMapping("/transaction/all")
@@ -42,23 +44,67 @@ public class Controller {
 		UUID uuid = UUID.randomUUID();
 		trans.setUUID(uuid);
 		
+		
+		
 		//finding entity ID corresponding to entityName
-		Long entityID = Long.MAX_VALUE;
-		List<Index> listOfEntityIndex = indexRepo.findByEntityName(trans.getEntityName());
+		//if not present then create a new entityid in EntityDefinition
+		Long entityID;
+		List<EntityDefinition> listOfEntityIndex = entityDefRepo.findByEntityName(trans.getEntityName());
 		if(listOfEntityIndex.size() != 0) {
 			entityID = listOfEntityIndex.get(0).getEntityID();
 		}
-		if(entityID== Long.MAX_VALUE) {
+		else {
 			Random rand = new Random();
-			entityID = rand.nextLong(Long.MAX_VALUE-2);	
+			entityID = rand.nextLong(Long.MAX_VALUE-2);
+			EntityDefinition entityDef =new EntityDefinition();
+			entityDef.setEntityID(entityID);
+			entityDef.setEntityName(trans.getEntityName());
+			entityDef.setEntityDescription("NA");
+			EntityDefinition entityDefReturn = entityDefRepo.save(entityDef);
 		}
-		Index index =new Index();
-		index.setEntityID(entityID);
-		index.setEntityName(trans.getEntityName());
-		index.setUUID(trans.getUUID());
-		Index indexReturn = indexRepo.save(index);
-		//System.out.println(indexReturn.getEntityName());
-		return transRepo.save(trans);
+	
+		
+		//updating the entitydata table with every transaction
+		boolean flag = true; // transaction validity
+		//finding the quantity for the specific entity
+		int entityQuantity = 0;
+		List<EntityData> entityDataCheck = entityDataRepo.findByEntityID(entityID);
+		if(entityDataCheck.size() != 0) {
+			entityQuantity = entityDataCheck.get(0).getQuantity();
+		}
+		if(trans.getBuyOrSell()=="sell") {
+			if(entityQuantity >= trans.getQuantity()) {
+				entityQuantity-=trans.getQuantity();
+			}
+			else {
+				flag=false;
+			}
+		}
+		else {
+			entityQuantity+=trans.getQuantity();
+		}
+		EntityData entityData = new EntityData();
+		entityData.setEntityID(entityID);
+		entityData.setEntityName(trans.getEntityName());
+		entityData.setQuantity(entityQuantity);
+		EntityData entityDataReturn = entityDataRepo.save(entityData);
+		
+		
+		
+		//if the transaction updation is valid
+		if(flag==true) {
+			//updating the index table and transaction with current transaction
+			Index index =new Index();
+			index.setEntityID(entityID);
+			index.setEntityName(trans.getEntityName());
+			index.setUUID(trans.getUUID());
+			Index indexReturn = indexRepo.save(index);
+			return transRepo.save(trans);
+			
+		}
+		else {
+			return new Transaction();
+		}
 	}
   
     

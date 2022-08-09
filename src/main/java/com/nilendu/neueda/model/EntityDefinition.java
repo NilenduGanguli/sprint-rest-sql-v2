@@ -22,11 +22,12 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="entityIndex")
-public class Index implements Serializable {
+@Table(name="entityDefinition")
+public class EntityDefinition implements Serializable {
 	
 	//the eID refers to type of entity
 	//all stocks have same eID,etc
+	@Id
 	private Long entityID;
 	
 	//name of the entity e.g. which bank stock or what type of crypto coin
@@ -35,16 +36,9 @@ public class Index implements Serializable {
 	//name is the name of the company/etc
 	private String entityName;
 	
-	//uuid corresponds to the transaction unique id to map transactions
-	//all transactions have different uuid
-	@Id
-	private String uuid;
+	//Description of entity
+	private String entityDescription;
 	
-//	public Index(Long entityID, String entityName, String uuid) {
-//		this.entityID = entityID;
-//		this.entityName = entityName;
-//		this.uuid = uuid;
-//	}
 	
 
 	public Long getEntityID() {
@@ -55,8 +49,8 @@ public class Index implements Serializable {
 		return this.entityName;
 	}
 	
-	public String getUUID() {
-		return this.uuid;
+	public String getEntityDescription() {
+		return this.entityDescription;
 	}
 	
 	public void setEntityID(long entityID) {
@@ -67,9 +61,10 @@ public class Index implements Serializable {
 		this.entityName = entityName;
 	}
 	
-	public void setUUID(String uuid) {
-		this.uuid = uuid;
+	public void setEntityDescription(String entityDesc) {
+		this.entityDescription = entityDesc;
 	}
 	
 
 }
+

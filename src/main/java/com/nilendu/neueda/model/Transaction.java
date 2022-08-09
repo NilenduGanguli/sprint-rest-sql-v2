@@ -29,6 +29,9 @@ public class Transaction implements Serializable {
 	//the eID refers to type of entity
 	//all stocks have same eID,etc
 	//entityName that is name of stock or company or crypto
+	//entity name should be in the format: "<type> <name>"
+	//where the type is : crypto,cash,stock
+	//name is the name of the company/etc
 	private String entityName;
 	
 	//uuid corresponds to the transaction unique id to map transactions
