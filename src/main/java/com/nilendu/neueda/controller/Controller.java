@@ -124,9 +124,10 @@ public class Controller {
 		double totalValue = 0.0;
 		for(EntityData i : entityList) {
 			String temp = i.getEntityName().split("-")[0];//hardcoding
+			//System.out.println(i.getEntityName().split("-")[1]);
 			if(temp.equals("cash")) { 
-				System.out.println(i.getEntityName());
-				totalValue+= i.getQuantity()*GetCurrent.cashValue(temp);
+				String temp2 = i.getEntityName().split("-")[1];
+				totalValue+= i.getQuantity()*GetCurrent.cashValue(temp2);
 			}
 		}
 		//System.out.println(totalValue);
@@ -142,8 +143,8 @@ public class Controller {
 		for(EntityData i : entityList) {
 			String temp = i.getEntityName().split("-")[0];//hardcoding
 			if(temp.equals("crypto")) { 
-				System.out.println(i.getEntityName());
-				totalValue+= i.getQuantity()*GetCurrent.cryptoValue(temp);
+				String temp2 = i.getEntityName().split("-")[1];
+				totalValue+= i.getQuantity()*GetCurrent.cryptoValue(temp2);
 			}
 		}
 		//System.out.println(totalValue);
@@ -158,9 +159,9 @@ public class Controller {
 		double totalValue = 0.0;
 		for(EntityData i : entityList) {
 			String temp = i.getEntityName().split("-")[0];//hardcoding
-			if(temp.equals("stocks")) { 
-				System.out.println(i.getEntityName());
-				totalValue+= i.getQuantity()*GetCurrent.stocksValue(temp);
+			if(temp.equals("stock")) { 
+				String temp2 = i.getEntityName().split("-")[1];
+				totalValue+= i.getQuantity()*GetCurrent.stocksValue(temp2);
 			}
 		}
 		//System.out.println(totalValue);
@@ -176,16 +177,19 @@ public class Controller {
 		for(EntityData i : entityList) {
 			String temp = i.getEntityName().split("-")[0];//hardcoding
 			if(temp.equals("cash")) { 
-				System.out.println(i.getEntityName());
-				totalValue+= i.getQuantity()*GetCurrent.cashValue(temp);
+				String temp2 = i.getEntityName().split("-")[1];
+				//System.out.println(temp2);
+				totalValue+= i.getQuantity()*GetCurrent.cashValue(temp2);
 			}
-			else if(temp.equals("cash")) { 
-				System.out.println(i.getEntityName());
-				totalValue+= i.getQuantity()*GetCurrent.cashValue(temp);
+			else if(temp.equals("crypto")) { 
+				String temp2 = i.getEntityName().split("-")[1];
+				//System.out.println(temp2);
+				totalValue+= i.getQuantity()*GetCurrent.cryptoValue(temp2);
 			}
-			else if(temp.equals("stocks")) { 
-				System.out.println(i.getEntityName());
-				totalValue+= i.getQuantity()*GetCurrent.stocksValue(temp);
+			else if(temp.equals("stock")) { 
+				String temp2 = i.getEntityName().split("-")[1];
+				//System.out.println(temp2);
+				totalValue+= i.getQuantity()*GetCurrent.stocksValue(temp2);
 			}
 		}
 		//System.out.println(totalValue);

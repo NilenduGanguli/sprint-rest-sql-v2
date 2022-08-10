@@ -20,6 +20,7 @@ public class GetCurrent {
 		cashDict.put("jpy",134.99);
 		cashDict.put("inr",79.53);
 		cashDict.put("cny",6.76);
+		cashDict.put("usd",1.0);
 		
 		return cashDict.get(currency.toLowerCase());
 	}
