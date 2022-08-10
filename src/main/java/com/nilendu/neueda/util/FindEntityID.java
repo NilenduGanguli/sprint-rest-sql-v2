@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 public class FindEntityID {
 	
-	@Autowired
-    IndexRepository indexRepo;
-	
-	public Long byName(String entityName) {
+	public static Long byName(String entityName,IndexRepository indexRepo) {
 		Long entityID = Long.MAX_VALUE;
 		List<Index> listOfEntityIndex = indexRepo.findByEntityName(entityName);
 		if(listOfEntityIndex.size() != 0) {

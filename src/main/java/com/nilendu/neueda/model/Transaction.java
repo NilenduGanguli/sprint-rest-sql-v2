@@ -46,12 +46,12 @@ public class Transaction implements Serializable {
 	private String buyOrSell;
 	
 	//quantity of transaction
-	private int quantity;
+	private double quantity;
 	
 	//total value of transaction
 	private double price;
 	
-	public int getQuantity() {
+	public double getQuantity() {
 		return this.quantity;
 	}
 	

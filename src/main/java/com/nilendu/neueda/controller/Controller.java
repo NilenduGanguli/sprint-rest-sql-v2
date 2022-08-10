@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
+import java.util.ArrayList;
 //import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -30,7 +31,7 @@ public class Controller {
     @Autowired
     EntityDefinitionRepository entityDefRepo;
     
-    // Get All stocks
+    // Get All transactions
     @GetMapping("/transaction/all")
     public List<Transaction> getAllTransactions() { 
     	List<Transaction> transAll = transRepo.findAll();
@@ -66,16 +67,21 @@ public class Controller {
 		
 		//updating the entitydata table with every transaction
 		boolean flag = true; // transaction validity
+		//check if the transaction buyOrSell parameter is good
+		if(trans.getBuyOrSell().equals("buy") || trans.getBuyOrSell().equals("sell")) {}
+		else {
+			flag=false;
+		}
 		//finding the quantity for the specific entity
-		int entityQuantity = 0;
+		double entityQuantity = 0;
 		List<EntityData> entityDataCheck = entityDataRepo.findByEntityID(entityID);
 		if(entityDataCheck.size() != 0) {
 			entityQuantity = entityDataCheck.get(0).getQuantity();
 		}
-		System.out.println(trans.getBuyOrSell());
+		//System.out.println(trans.getBuyOrSell());
 		if(trans.getBuyOrSell().equals("sell")) {
-			System.out.println(trans.getQuantity());
-			System.out.println(entityQuantity);
+			//System.out.println(trans.getQuantity());
+			//System.out.println(entityQuantity);
 			if(entityQuantity >= trans.getQuantity()) {
 				entityQuantity-=trans.getQuantity();
 			}
@@ -110,22 +116,81 @@ public class Controller {
 		}
 	}
   
-    
-    
-    
-//    @GetMapping("/stocks/{name}")
-//    public List<Stocks> getStock(@PathVariable(value = "name") String name) { 
-//    	List<Stocks> stocksAll = stockRepo.findAll();
-//    	
-//        return stockRepo.findAll();
-//    }
-//
-//    // Create a new Note
-//    @PostMapping("/stocks")
-//    public Stocks enterStock(@Valid @RequestBody Stocks stock) {
-//    	System.out.println("Post Triggered...."+ Double.toString(stock.getTotalPrice()));
-//        return stockRepo.save(stock);
-//    }
+    //get value of portfolio for cash
+	@GetMapping("/value/cash")
+	public String getCashValue() {
+		
+		List<EntityData> entityList = entityDataRepo.findAll();
+		double totalValue = 0.0;
+		for(EntityData i : entityList) {
+			String temp = i.getEntityName().split("-")[0];//hardcoding
+			if(temp.equals("cash")) { 
+				System.out.println(i.getEntityName());
+				totalValue+= i.getQuantity()*GetCurrent.cashValue(temp);
+			}
+		}
+		//System.out.println(totalValue);
+		return Double.toString(totalValue);//working
+	}
+	
+	//get value of portfolio for cash
+	@GetMapping("/value/crypto")
+	public String getCryptoValue() {
+		
+		List<EntityData> entityList = entityDataRepo.findAll();
+		double totalValue = 0.0;
+		for(EntityData i : entityList) {
+			String temp = i.getEntityName().split("-")[0];//hardcoding
+			if(temp.equals("crypto")) { 
+				System.out.println(i.getEntityName());
+				totalValue+= i.getQuantity()*GetCurrent.cryptoValue(temp);
+			}
+		}
+		//System.out.println(totalValue);
+		return Double.toString(totalValue);//working
+	}
+	
+	//get value of portfolio for cash
+	@GetMapping("/value/stocks")
+	public String getStocksValue() {
+		
+		List<EntityData> entityList = entityDataRepo.findAll();
+		double totalValue = 0.0;
+		for(EntityData i : entityList) {
+			String temp = i.getEntityName().split("-")[0];//hardcoding
+			if(temp.equals("stocks")) { 
+				System.out.println(i.getEntityName());
+				totalValue+= i.getQuantity()*GetCurrent.stocksValue(temp);
+			}
+		}
+		//System.out.println(totalValue);
+		return Double.toString(totalValue);//working
+	}
+	
+	//get total portfolio
+	@GetMapping("/value/portfolio")
+	public String getportfolioValue() {
+		
+		List<EntityData> entityList = entityDataRepo.findAll();
+		double totalValue = 0.0;
+		for(EntityData i : entityList) {
+			String temp = i.getEntityName().split("-")[0];//hardcoding
+			if(temp.equals("cash")) { 
+				System.out.println(i.getEntityName());
+				totalValue+= i.getQuantity()*GetCurrent.cashValue(temp);
+			}
+			else if(temp.equals("cash")) { 
+				System.out.println(i.getEntityName());
+				totalValue+= i.getQuantity()*GetCurrent.cashValue(temp);
+			}
+			else if(temp.equals("stocks")) { 
+				System.out.println(i.getEntityName());
+				totalValue+= i.getQuantity()*GetCurrent.stocksValue(temp);
+			}
+		}
+		//System.out.println(totalValue);
+		return Double.toString(totalValue);//working
+	}
     
 }
 

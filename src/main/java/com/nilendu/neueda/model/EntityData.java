@@ -32,7 +32,7 @@ public class EntityData implements Serializable {
 	private String entityName;
 	
 	//this is the quantity of each entity present currently
-	private int quantity;
+	private double quantity;
 	
 	public Long getEntityID() {
 		return this.entityID;
@@ -42,7 +42,7 @@ public class EntityData implements Serializable {
 		return this.entityName;
 	}
 	
-	public int getQuantity() {
+	public double getQuantity() {
 		return this.quantity;
 	}
 	
@@ -54,7 +54,7 @@ public class EntityData implements Serializable {
 		this.entityName = entityName;
 	}
 	
-	public void setQuantity(int quantity) {
+	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
 }
