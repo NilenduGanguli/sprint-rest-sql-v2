@@ -27,7 +27,7 @@ entity-type: stock  :  aapl,
 abnb,
 amzn,
 intc,
-goog
+googl
 
 
 entity-type : crypto  :  btc,
