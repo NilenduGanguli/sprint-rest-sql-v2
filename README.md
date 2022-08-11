@@ -12,7 +12,7 @@ json format for sending requests:
     "entityName" : "entity-type-entity-name", \
     "date" : "yyyy-mm-ddThh:mm:ss", \
     "buyOrSell" : "buy", \
-    "quantity" : integer, \
+    "quantity" : double, \
     "price" : double \
 }
 
