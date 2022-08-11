@@ -16,4 +16,23 @@ json format for sending requests:
     "price" : double \
 }
 
+entity-type:  cash  :  eur,
+gbp,
+jpy,
+inr,
+cny,
+usd
+
+entity-type: stock  :  aapl,
+abnb,
+amzn,
+intc,
+goog
+
+
+entity-type : crypto  :  btc,
+eth,
+usd,
+dog,
+ltc
 
