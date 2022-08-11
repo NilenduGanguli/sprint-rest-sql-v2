@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 import java.util.ArrayList;
+import java.util.Date;
 //import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -30,6 +31,8 @@ public class Controller {
     EntityDataRepository entityDataRepo;
     @Autowired
     EntityDefinitionRepository entityDefRepo;
+    @Autowired
+    ResponseValueRepository responseValueRepo;
     
     // Get All transactions
     @GetMapping("/transaction/all")
@@ -118,8 +121,11 @@ public class Controller {
   
     //get value of portfolio for cash
 	@GetMapping("/value/cash")
-	public String getCashValue() {
+	public ResponseValue getCashValue() {
 		
+		ResponseValue res= new ResponseValue();
+		Date today = new Date();
+		UUID uuid = UUID.randomUUID();
 		List<EntityData> entityList = entityDataRepo.findAll();
 		double totalValue = 0.0;
 		for(EntityData i : entityList) {
@@ -131,12 +137,22 @@ public class Controller {
 			}
 		}
 		//System.out.println(totalValue);
-		return Double.toString(totalValue);//working
+		res.setDate(today);
+		res.setId(uuid);
+		res.setValue(totalValue);
+		res.setRequest("/value/cash");
+		ResponseValue resReturn = responseValueRepo.save(res);
+		System.out.println(resReturn.getValue());
+		return resReturn;//working
 	}
 	
 	//get value of portfolio for cash
 	@GetMapping("/value/crypto")
-	public String getCryptoValue() {
+	public ResponseValue getCryptoValue() {
+		
+		ResponseValue res= new ResponseValue();
+		Date today = new Date();
+		UUID uuid = UUID.randomUUID();
 		
 		List<EntityData> entityList = entityDataRepo.findAll();
 		double totalValue = 0.0;
@@ -148,12 +164,21 @@ public class Controller {
 			}
 		}
 		//System.out.println(totalValue);
-		return Double.toString(totalValue);//working
+		res.setDate(today);
+		res.setId(uuid);
+		res.setValue(totalValue);
+		res.setRequest("/value/cash");
+		ResponseValue resReturn = responseValueRepo.save(res);
+		System.out.println(resReturn.getValue());
+		return resReturn;//working
 	}
 	
 	//get value of portfolio for cash
 	@GetMapping("/value/stocks")
-	public String getStocksValue() {
+	public ResponseValue getStocksValue() {
+		ResponseValue res= new ResponseValue();
+		Date today = new Date();
+		UUID uuid = UUID.randomUUID();
 		
 		List<EntityData> entityList = entityDataRepo.findAll();
 		double totalValue = 0.0;
@@ -165,12 +190,21 @@ public class Controller {
 			}
 		}
 		//System.out.println(totalValue);
-		return Double.toString(totalValue);//working
+		res.setDate(today);
+		res.setId(uuid);
+		res.setValue(totalValue);
+		res.setRequest("/value/cash");
+		ResponseValue resReturn = responseValueRepo.save(res);
+		System.out.println(resReturn.getValue());
+		return resReturn;//working
 	}
 	
 	//get total portfolio
 	@GetMapping("/value/portfolio")
-	public String getportfolioValue() {
+	public ResponseValue getportfolioValue() {
+		ResponseValue res= new ResponseValue();
+		Date today = new Date();
+		UUID uuid = UUID.randomUUID();
 		
 		List<EntityData> entityList = entityDataRepo.findAll();
 		double totalValue = 0.0;
@@ -193,7 +227,13 @@ public class Controller {
 			}
 		}
 		//System.out.println(totalValue);
-		return Double.toString(totalValue);//working
+		res.setDate(today);
+		res.setId(uuid);
+		res.setValue(totalValue);
+		res.setRequest("/value/cash");
+		ResponseValue resReturn = responseValueRepo.save(res);
+		System.out.println(resReturn.getValue());
+		return resReturn;//working
 	}
     
 }
